@@ -1,5 +1,6 @@
 package com.paulosrlj.straypets.services;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
 import com.paulosrlj.straypets.config.modelMapper.LocationDtoConverter;
 import com.paulosrlj.straypets.config.modelMapper.PetPhotoDTOConverter;
@@ -48,28 +49,16 @@ public class PetService {
     @Autowired
     private GoogleMapsLocationService googleMapsLocationService;
 
-    public Pet findPetById(Long id) throws Exception {
+    public Pet findPetById(Long id) {
         try {
             Optional<Pet> pet = petRepository.findById(id);
             if (pet.isPresent()){
                 return pet.get();
             }
+            throw new NotFoundException("Não encontrado");
+
         } catch (Exception ex){
-            throw new Exception("Não encontrado");
-        }
-
-        throw new Exception("Não encontrado");
-    }
-
-    @Transactional
-    public Pet createPet(Pet pet) {
-        try {
-            var persistedPet = petRepository.save(pet);
-            petRepository.flush();
-
-            return persistedPet;
-        } catch (Exception ex) {
-            throw new PersistenseErrorException("Ocorreu um erro ao persistir o pet.", ex);
+            throw new NotFoundException("Não encontrado");
         }
     }
 

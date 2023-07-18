@@ -21,9 +21,8 @@ public class PetController {
     @Autowired
     private PetDtoConverter petDtoConverter;
 
-
     @GetMapping("/{id}")
-    public OutputPet getPetById(@PathVariable Long id) throws Exception {
+    public OutputPet getPetById(@PathVariable Long id) {
         Pet pet = petService.findPetById(id);
 
         return petDtoConverter.convertToOutput(pet);
@@ -37,7 +36,7 @@ public class PetController {
         return petDtoConverter.convertToOutput(petService.createPet(pet, data.getImages()));
     }
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@RequestParam Long id) {
         petService.delete(id);
