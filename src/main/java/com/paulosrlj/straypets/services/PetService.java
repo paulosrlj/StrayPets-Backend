@@ -55,10 +55,10 @@ public class PetService {
             if (pet.isPresent()){
                 return pet.get();
             }
-            throw new NotFoundException("Não encontrado");
+            throw new EntityNotFoundException(id);
 
         } catch (Exception ex){
-            throw new NotFoundException("Não encontrado");
+            throw new EntityNotFoundException("Não encontrado");
         }
     }
 
