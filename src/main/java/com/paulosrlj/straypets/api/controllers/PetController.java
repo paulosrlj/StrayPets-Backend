@@ -6,6 +6,7 @@ import com.paulosrlj.straypets.config.modelMapper.PetDtoConverter;
 import com.paulosrlj.straypets.domain.entities.Pet;
 import com.paulosrlj.straypets.domain.filters.PetFilter;
 import com.paulosrlj.straypets.services.PetService;
+import com.paulosrlj.straypets.utils.StringTrimmer;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ public class PetController {
 
     @GetMapping("/queryPet")
     public List<Pet> queryPet(PetFilter petFilter) {
+        StringTrimmer.trimStrings(petFilter);
         List<Pet> pets = petService.findAll(petFilter);
 
         return pets;
