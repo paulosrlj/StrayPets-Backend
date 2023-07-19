@@ -4,12 +4,15 @@ import com.paulosrlj.straypets.api.dto.input.InputPetWrapper;
 import com.paulosrlj.straypets.api.dto.output.OutputPet;
 import com.paulosrlj.straypets.config.modelMapper.PetDtoConverter;
 import com.paulosrlj.straypets.domain.entities.Pet;
+import com.paulosrlj.straypets.domain.filters.PetFilter;
 import com.paulosrlj.straypets.services.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pet")
@@ -26,6 +29,13 @@ public class PetController {
         Pet pet = petService.findPetById(id);
 
         return petDtoConverter.convertToOutput(pet);
+    }
+
+    @GetMapping("/queryPet")
+    public List<Pet> queryPet(PetFilter petFilter) {
+        List<Pet> pets = petService.findAll(petFilter);
+
+        return pets;
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

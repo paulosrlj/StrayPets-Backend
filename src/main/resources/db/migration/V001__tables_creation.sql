@@ -19,7 +19,7 @@ CREATE TABLE pet
     type          varchar(30) NOT null,
     gender        varchar(15),
     breed         varchar(30),
-    adoption_date datetime,
+    adoption_date date,
     comments      varchar(250),
     missing       boolean DEFAULT FALSE,
 

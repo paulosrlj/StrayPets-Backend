@@ -1,12 +1,12 @@
 package com.paulosrlj.straypets.services;
 
-import com.amazonaws.services.kms.model.NotFoundException;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
 import com.paulosrlj.straypets.config.modelMapper.LocationDtoConverter;
 import com.paulosrlj.straypets.config.modelMapper.PetPhotoDTOConverter;
 import com.paulosrlj.straypets.domain.entities.Location;
 import com.paulosrlj.straypets.domain.entities.Pet;
 import com.paulosrlj.straypets.domain.entities.Photo;
+import com.paulosrlj.straypets.domain.filters.PetFilter;
 import com.paulosrlj.straypets.exception.EntityInUseException;
 import com.paulosrlj.straypets.exception.EntityNotFoundException;
 import com.paulosrlj.straypets.exception.PersistenseErrorException;
@@ -14,6 +14,7 @@ import com.paulosrlj.straypets.interfaces.services.PhotoStorageService;
 import com.paulosrlj.straypets.repositories.LocationRepository;
 import com.paulosrlj.straypets.repositories.PetPhotoRepository;
 import com.paulosrlj.straypets.repositories.PetRepository;
+import com.paulosrlj.straypets.repositories.specs.PetSpecs;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,6 +49,10 @@ public class PetService {
 
     @Autowired
     private GoogleMapsLocationService googleMapsLocationService;
+
+    public List<Pet> findAll(PetFilter petFilter) {
+        return petRepository.findAll(PetSpecs.filterPets(petFilter));
+    }
 
     public Pet findPetById(Long id) {
         try {
