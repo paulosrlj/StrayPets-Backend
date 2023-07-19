@@ -2,13 +2,10 @@ package com.paulosrlj.straypets.repositories.specs;
 
 import com.paulosrlj.straypets.domain.entities.Pet;
 import com.paulosrlj.straypets.domain.filters.PetFilter;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -50,6 +47,12 @@ public class PetSpecs {
 
                 if (filter.getCep() != null) {
                     predicates.add(criteriaBuilder.equal(root.get("location").get("address").get("cep"), filter.getCep()));
+                }
+
+                if (filter.getSub_locality() != null) {
+                    predicates.add(criteriaBuilder.like(
+                            root.get("location").get("address").get("bairro"), "%" + filter.getSub_locality() + "%"
+                    ));
                 }
 
                 return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

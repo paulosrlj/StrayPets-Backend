@@ -34,4 +34,6 @@ public class PetFilter {
 
     private String cep;
 
+    private String sub_locality;
+
 }
