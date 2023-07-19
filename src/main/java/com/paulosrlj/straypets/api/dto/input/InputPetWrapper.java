@@ -13,7 +13,7 @@ import java.util.ArrayList;
     public class InputPetWrapper {
     
         @NotNull
-        @FileTypeValidation(allowed = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+        @FileTypeValidation(allowed = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, "image/webp"})
         @Valid
         private ArrayList<MultipartFile> images;
     
