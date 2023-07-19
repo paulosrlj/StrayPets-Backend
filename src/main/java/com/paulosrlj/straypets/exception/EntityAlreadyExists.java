@@ -10,7 +10,7 @@ public class EntityAlreadyExists extends BusinessException {
     }
 
     public EntityAlreadyExists(Long entityId) {
-        super(String.format("A entidade de id %d não existe.", entityId));
+        super(String.format("A entidade de id %d já existe.", entityId));
     }
 
 }

@@ -207,6 +207,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
     }
 
+    @ExceptionHandler(EntityAlreadyExists.class)
+    public ResponseEntity<?> handleAlreadyExistsException(EntityAlreadyExists ex, WebRequest req) {
+
+        var status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
+        String detail = ex.getMessage();
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(detail)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
+    }
+
     @ExceptionHandler(InternalException.class)
     public ResponseEntity<?> handleInternalException(InternalException ex, WebRequest req) {
 
