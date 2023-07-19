@@ -6,7 +6,7 @@ import com.paulosrlj.straypets.api.dto.auth.RegisterDTO;
 import com.paulosrlj.straypets.domain.entities.User;
 import com.paulosrlj.straypets.exception.EntityAlreadyExists;
 import com.paulosrlj.straypets.repositories.UserRepository;
-import com.paulosrlj.straypets.services.TokenService;
+import com.paulosrlj.straypets.services.auth.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

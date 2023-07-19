@@ -1,4 +1,4 @@
-package com.paulosrlj.straypets.services;
+package com.paulosrlj.straypets.services.storage;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;

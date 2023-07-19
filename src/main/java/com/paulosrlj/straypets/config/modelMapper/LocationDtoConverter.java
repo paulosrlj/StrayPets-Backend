@@ -2,8 +2,10 @@ package com.paulosrlj.straypets.config.modelMapper;
 
 import com.paulosrlj.straypets.api.dto.output.GoogleMapAddressOutput;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
+
 import com.paulosrlj.straypets.domain.entities.Address;
 import com.paulosrlj.straypets.domain.entities.Location;
+import com.paulosrlj.straypets.enums.RegionsType;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +48,37 @@ public class LocationDtoConverter {
         GoogleMapAddressOutput output = new GoogleMapAddressOutput();
 
         output.setFull_address(googleMapAddress.getResults().get(0).getFormattedAddress());
-        output.setStreet(googleMapAddress.getResults().get(0).getAddressComponents().get(1).getLongName());
-        output.setSublocality(googleMapAddress.getResults().get(0).getAddressComponents().get(2).getLongName());
-        output.setCity(googleMapAddress.getResults().get(0).getAddressComponents().get(3).getLongName());
-        output.setCep(googleMapAddress.getResults().get(0).getAddressComponents().get(6).getLongName());
+
+        for(var addressComp : googleMapAddress.getResults().get(0).getAddressComponents()) {
+            setAddressComponentToCorrectField(output, addressComp);
+        }
+
+//        output.setStreet(googleMapAddress.getResults().get(0).getAddressComponents().get(1).getLongName());
+//        output.setSublocality(googleMapAddress.getResults().get(0).getAddressComponents().get(2).getLongName());
+//        output.setCity(googleMapAddress.getResults().get(0).getAddressComponents().get(3).getLongName());
+//        output.setCep(googleMapAddress.getResults().get(0).getAddressComponents().get(6).getLongName());
 
         output.setLatitude(googleMapAddress.getLatitude());
         output.setLongitude(googleMapAddress.getLongitude());
 
         return output;
+    }
+
+    private void setAddressComponentToCorrectField(
+            GoogleMapAddressOutput addressList,
+            GoogleMapsAddressResponse.AddressComponent addressComponent
+    ) {
+        if (addressComponent.getTypes().contains(RegionsType.STREET.getGoogleMapsKey())) {
+            addressList.setStreet(addressComponent.getLongName());
+        }
+        else if (addressComponent.getTypes().contains(RegionsType.SUBLOCALITY.getGoogleMapsKey())) {
+            addressList.setSublocality(addressComponent.getLongName());
+        }
+        else if (addressComponent.getTypes().contains(RegionsType.CITY.getGoogleMapsKey())){
+            addressList.setCity(addressComponent.getLongName());
+        }
+        else if (addressComponent.getTypes().contains(RegionsType.POSTAL_CODE.getGoogleMapsKey())){
+            addressList.setCep(addressComponent.getLongName());
+        }
     }
 }

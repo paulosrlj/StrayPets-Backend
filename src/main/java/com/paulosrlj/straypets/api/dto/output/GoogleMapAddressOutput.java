@@ -1,10 +1,12 @@
 package com.paulosrlj.straypets.api.dto.output;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GoogleMapAddressOutput {
 
     private BigDecimal latitude;

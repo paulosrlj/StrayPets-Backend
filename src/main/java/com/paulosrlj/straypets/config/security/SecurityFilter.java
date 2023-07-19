@@ -1,7 +1,7 @@
 package com.paulosrlj.straypets.config.security;
 
 import com.paulosrlj.straypets.repositories.UserRepository;
-import com.paulosrlj.straypets.services.TokenService;
+import com.paulosrlj.straypets.services.auth.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

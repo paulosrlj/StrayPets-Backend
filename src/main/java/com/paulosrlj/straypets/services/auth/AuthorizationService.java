@@ -1,4 +1,4 @@
-package com.paulosrlj.straypets.services;
+package com.paulosrlj.straypets.services.auth;
 
 import com.paulosrlj.straypets.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

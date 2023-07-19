@@ -2,7 +2,6 @@ package com.paulosrlj.straypets.api.dto.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.paulosrlj.straypets.services.GoogleMapsLocationService;
 import lombok.Data;
 
 import java.math.BigDecimal;

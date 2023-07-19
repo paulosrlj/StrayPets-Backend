@@ -1,4 +1,4 @@
-package com.paulosrlj.straypets.services;
+package com.paulosrlj.straypets.services.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

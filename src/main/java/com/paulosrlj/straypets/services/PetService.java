@@ -15,6 +15,7 @@ import com.paulosrlj.straypets.repositories.LocationRepository;
 import com.paulosrlj.straypets.repositories.PetPhotoRepository;
 import com.paulosrlj.straypets.repositories.PetRepository;
 import com.paulosrlj.straypets.repositories.specs.PetSpecs;
+import com.paulosrlj.straypets.services.geolocation.GoogleMapsLocationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

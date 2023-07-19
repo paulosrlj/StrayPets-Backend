@@ -3,7 +3,7 @@ package com.paulosrlj.straypets.api.controllers;
 import com.paulosrlj.straypets.api.dto.output.GoogleMapAddressOutput;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
 import com.paulosrlj.straypets.config.modelMapper.LocationDtoConverter;
-import com.paulosrlj.straypets.services.GoogleMapsLocationService;
+import com.paulosrlj.straypets.services.geolocation.GoogleMapsLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
