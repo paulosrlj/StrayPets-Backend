@@ -207,6 +207,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
     }
 
+    @ExceptionHandler(InternalException.class)
+    public ResponseEntity<?> handleInternalException(InternalException ex, WebRequest req) {
+
+        var status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+        String detail = ex.getMessage();
+
+        Problem problem = createProblemBuilder(status, problemType, detail)
+                .userMessage(detail)
+                .build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, req);
+    }
+
     @ExceptionHandler(EntityInUseException.class)
     public ResponseEntity<?> handleEntidadeEmUsoException(EntityInUseException ex, WebRequest req) {
 

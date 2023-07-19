@@ -1,4 +1,11 @@
 package com.paulosrlj.straypets.exception;
 
-public class InternalException {
+public class InternalException extends RuntimeException{
+    public InternalException(String message) {
+        super(message);
+    }
+
+    public InternalException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

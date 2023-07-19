@@ -1,11 +1,9 @@
 package com.paulosrlj.straypets.config.modelMapper;
 
-import com.paulosrlj.straypets.api.dto.input.InputPet;
-import com.paulosrlj.straypets.api.dto.output.OutputPet;
+import com.paulosrlj.straypets.api.dto.output.GoogleMapAddressOutput;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
 import com.paulosrlj.straypets.domain.entities.Address;
 import com.paulosrlj.straypets.domain.entities.Location;
-import com.paulosrlj.straypets.domain.entities.Pet;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +42,18 @@ public class LocationDtoConverter {
         return location;
     }
 
+    public GoogleMapAddressOutput convertAddressResponseToAddressOutput(GoogleMapsAddressResponse googleMapAddress) {
+        GoogleMapAddressOutput output = new GoogleMapAddressOutput();
+
+        output.setFull_address(googleMapAddress.getResults().get(0).getFormattedAddress());
+        output.setStreet(googleMapAddress.getResults().get(0).getAddressComponents().get(1).getLongName());
+        output.setSublocality(googleMapAddress.getResults().get(0).getAddressComponents().get(2).getLongName());
+        output.setCity(googleMapAddress.getResults().get(0).getAddressComponents().get(3).getLongName());
+        output.setCep(googleMapAddress.getResults().get(0).getAddressComponents().get(6).getLongName());
+
+        output.setLatitude(googleMapAddress.getLatitude());
+        output.setLongitude(googleMapAddress.getLongitude());
+
+        return output;
+    }
 }
