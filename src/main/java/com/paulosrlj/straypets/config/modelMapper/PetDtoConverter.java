@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Component
 public class PetDtoConverter {
@@ -19,6 +22,16 @@ public class PetDtoConverter {
         OutputPet outputPet = modelMapper.map(pet, OutputPet.class);
 
         return outputPet;
+    }
+
+    public List<OutputPet> convertToOutput(List<Pet> pets) {
+        List<OutputPet> output = new ArrayList<>();
+
+        for(Pet pet : pets) {
+            output.add(modelMapper.map(pet, OutputPet.class));
+        }
+
+        return output;
     }
 
     public Pet convertInputToModelPet(InputPet pet){

@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Service
@@ -37,7 +38,7 @@ public class GoogleMapsLocationService {
             GoogleMapsAddressResponse address = null;
 
             address = objectMapper.readValue(response, GoogleMapsAddressResponse.class);
-            address.setResults(new ArrayList<>(Collections.singletonList(address.getResults().get(0))));
+            address.setResults(address.getResults());
             address.setLatitude(latitude);
             address.setLongitude(longitude);
 
@@ -49,7 +50,7 @@ public class GoogleMapsLocationService {
     }
 
     private String makeRequest(BigDecimal latitude, BigDecimal longitude) {
-        String requestUrl  = String.format(
+        String requestUrl = String.format(
                 "%s?latlng=%s,%s&key=%s",
                 googleMapsUrl,
                 latitude.toString(), longitude.toString(), googleMapsApiKey);

@@ -1,7 +1,9 @@
 package com.paulosrlj.straypets.services;
 
+import com.paulosrlj.straypets.api.dto.output.GoogleMapAddressOutput;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
-import com.paulosrlj.straypets.config.modelMapper.LocationDtoConverter;
+import com.paulosrlj.straypets.config.modelMapper.GeolocationDtoConverter;
+import com.paulosrlj.straypets.config.modelMapper.LocationDTOConverter;
 import com.paulosrlj.straypets.config.modelMapper.PetPhotoDTOConverter;
 import com.paulosrlj.straypets.domain.entities.Location;
 import com.paulosrlj.straypets.domain.entities.Pet;
@@ -46,10 +48,13 @@ public class PetService {
     private PetPhotoDTOConverter petPhotoDTOConverter;
 
     @Autowired
-    private LocationDtoConverter locationDtoConverter;
+    private GeolocationDtoConverter geolocationDtoConverter;
 
     @Autowired
     private GoogleMapsLocationService googleMapsLocationService;
+
+    @Autowired
+    private LocationDTOConverter locationDTOConverter;
 
     public List<Pet> findAll(PetFilter petFilter) {
         return petRepository.findAll(PetSpecs.filterPets(petFilter));
@@ -76,7 +81,10 @@ public class PetService {
                     pet.getLocation().getLatitude(),
                     pet.getLocation().getLongitude());
 
-            Location location = locationDtoConverter.convertAddressToLocation(address);
+            GoogleMapAddressOutput addressOutput = geolocationDtoConverter.convertAddressResponseToAddressOutput(address);
+
+            Location location = locationDTOConverter.convertAddressOutputToLocation(addressOutput);
+
             var persistedLocation = locationRepository.save(location);
 
             pet.setLocation(persistedLocation);
@@ -95,7 +103,7 @@ public class PetService {
             }
 
             var persistedPhotos = petPhotoRepository.saveAll(photos);
-//            persistedPet.setPhotos(persistedPhotos);
+            persistedPet.setPhotos(persistedPhotos);
 
             return persistedPet;
         } catch (Exception ex) {

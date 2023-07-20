@@ -51,7 +51,7 @@ public class PetSpecs {
 
                 if (filter.getSub_locality() != null) {
                     predicates.add(criteriaBuilder.like(
-                            root.get("location").get("address").get("bairro"), "%" + filter.getSub_locality() + "%"
+                            root.get("location").get("address").get("sub_location"), "%" + filter.getSub_locality() + "%"
                     ));
                 }
 

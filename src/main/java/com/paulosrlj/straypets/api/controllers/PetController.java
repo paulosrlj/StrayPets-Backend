@@ -33,11 +33,11 @@ public class PetController {
     }
 
     @GetMapping("/queryPet")
-    public List<Pet> queryPet(PetFilter petFilter) {
+    public List<OutputPet> queryPet(PetFilter petFilter) {
         StringTrimmer.trimStrings(petFilter);
         List<Pet> pets = petService.findAll(petFilter);
 
-        return pets;
+        return petDtoConverter.convertToOutput(pets);
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

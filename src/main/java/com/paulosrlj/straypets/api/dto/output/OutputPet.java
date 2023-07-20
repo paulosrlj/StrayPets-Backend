@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OutputPet {
 
     private String name;

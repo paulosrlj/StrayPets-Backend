@@ -6,20 +6,20 @@ delete from `stray-pets`.pet;
 
 set foreign_key_checks = 1;
 
-insert into location (id, latitude, longitude, cep, logradouro, bairro, cidade)
-values (1, -6.892701, -38.550474, '58900000', 'Rua Julio Pajeu', 'Bairro Cristo Rei', 'Cajazeiras');
+insert into location (id, latitude, longitude, cep, street, sub_location, city)
+values (1, -6.892701, -38.550474, '58900-000', 'Rua Julio Pajeu', 'Bairro Cristo Rei', 'Cajazeiras');
 
-insert into location (id, latitude, longitude, cep, logradouro, bairro, cidade)
-values (2, -6.892410, -38.549463, '58900000', 'Rua Sinfrônio Gonçalves Braga', 'Bairro Cristo Rei', 'Cajazeiras');
+insert into location (id, latitude, longitude, cep, street, sub_location, city)
+values (2, -6.892410, -38.549463, '58900-000', 'Rua Sinfrônio Gonçalves Braga', 'Bairro Cristo Rei', 'Cajazeiras');
 
-insert into location (id, latitude, longitude, cep, logradouro, bairro, cidade)
-values (3, -6.893139, -38.561127, '58900000', 'Rua Padre José Tomás', 'Centro', 'Cajazeiras');
+insert into location (id, latitude, longitude, cep, street, sub_location, city)
+values (3, -6.893139, -38.561127, '58900-000', 'Rua Padre José Tomás', 'Centro', 'Cajazeiras');
 
-insert into location (id, latitude, longitude, cep, logradouro, bairro, cidade)
-values (4, -6.889673, -38.545356, '58900000', 'Rua José Leôncio da Silva', 'Loteamento Jardim Oasis', 'Cajazeiras');
+insert into location (id, latitude, longitude, cep, street, sub_location, city)
+values (4, -6.889673, -38.545356, '58900-000', 'Rua José Leôncio da Silva', 'Loteamento Jardim Oasis', 'Cajazeiras');
 
-insert into location (id, latitude, longitude, cep, logradouro, bairro, cidade)
-values (5, -6.872976, -38.560661, '58900000', 'Rua Raimundo Leite Rolim Sobrinho', 'Loteamento Casas Populares', 'Cajazeiras');
+insert into location (id, latitude, longitude, cep, street, sub_location, city)
+values (5, -6.872976, -38.560661, '58900-000', 'Rua Raimundo Leite Rolim Sobrinho', 'Loteamento Casas Populares', 'Cajazeiras');
 
 insert into pet (id, name, type, gender, breed, adoption_date, comments, location_id)
 values (1, 'Bolinha', 'CACHORRO', 'MACHO', 'Labrador', null, '', 1);

@@ -21,6 +21,7 @@ public class InputPet {
     @Enumerated(EnumType.STRING)
     private PetType type;
 
+    @Enumerated(EnumType.STRING)
     private PetGender gender;
 
     private String breed;

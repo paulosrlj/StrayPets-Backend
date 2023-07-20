@@ -5,9 +5,9 @@ CREATE TABLE location
     longitude  DECIMAL(9, 6) NOT NULL,
 
     cep        varchar(30)   NOT NULL,
-    logradouro VARCHAR(150),
-    bairro     varchar(150)  not null,
-    cidade     varchar(150),
+    street VARCHAR(150),
+    sub_location     varchar(150)  not null,
+    city     varchar(150),
 
     PRIMARY key (id)
 );

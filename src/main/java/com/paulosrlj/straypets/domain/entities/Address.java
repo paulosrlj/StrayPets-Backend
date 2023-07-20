@@ -12,11 +12,11 @@ public class Address {
     private String cep;
 
     @Column
-    private String logradouro;
+    private String street;
 
     @Column
-    private String bairro;
+    private String sub_location;
 
     @Column
-    private String cidade;
+    private String city;
 }
