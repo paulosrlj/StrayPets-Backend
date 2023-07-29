@@ -15,6 +15,8 @@ import java.util.List;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OutputPet {
 
+    private Long id;
+
     private String name;
 
     private PetType type;
@@ -24,6 +26,8 @@ public class OutputPet {
     private String breed;
 
     private Date adoption_date;
+
+    private Date find_date;
 
     private String comments;
 

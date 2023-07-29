@@ -1,5 +1,6 @@
 package com.paulosrlj.straypets.services;
 
+import com.paulosrlj.straypets.api.dto.input.InputMissingAdoptPet;
 import com.paulosrlj.straypets.api.dto.output.GoogleMapAddressOutput;
 import com.paulosrlj.straypets.api.dto.web.GoogleMapsAddressResponse;
 import com.paulosrlj.straypets.config.modelMapper.GeolocationDtoConverter;
@@ -8,7 +9,9 @@ import com.paulosrlj.straypets.config.modelMapper.PetPhotoDTOConverter;
 import com.paulosrlj.straypets.domain.entities.Location;
 import com.paulosrlj.straypets.domain.entities.Pet;
 import com.paulosrlj.straypets.domain.entities.Photo;
+import com.paulosrlj.straypets.domain.entities.User;
 import com.paulosrlj.straypets.domain.filters.PetFilter;
+import com.paulosrlj.straypets.exception.BusinessException;
 import com.paulosrlj.straypets.exception.EntityInUseException;
 import com.paulosrlj.straypets.exception.EntityNotFoundException;
 import com.paulosrlj.straypets.exception.PersistenseErrorException;
@@ -16,6 +19,7 @@ import com.paulosrlj.straypets.interfaces.services.PhotoStorageService;
 import com.paulosrlj.straypets.repositories.LocationRepository;
 import com.paulosrlj.straypets.repositories.PetPhotoRepository;
 import com.paulosrlj.straypets.repositories.PetRepository;
+import com.paulosrlj.straypets.repositories.UserRepository;
 import com.paulosrlj.straypets.repositories.specs.PetSpecs;
 import com.paulosrlj.straypets.services.geolocation.GoogleMapsLocationService;
 import jakarta.transaction.Transactional;
@@ -34,6 +38,9 @@ public class PetService {
 
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private PetPhotoRepository petPhotoRepository;
@@ -56,19 +63,23 @@ public class PetService {
     @Autowired
     private LocationDTOConverter locationDTOConverter;
 
+
+    //    @Cacheable("findAllPets")
     public List<Pet> findAll(PetFilter petFilter) {
-        return petRepository.findAll(PetSpecs.filterPets(petFilter));
+        var pets = petRepository.findAll(PetSpecs.filterPets(petFilter));
+
+        return pets;
     }
 
     public Pet findPetById(Long id) {
         try {
             Optional<Pet> pet = petRepository.findById(id);
-            if (pet.isPresent()){
+            if (pet.isPresent()) {
                 return pet.get();
             }
             throw new EntityNotFoundException(id);
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new EntityNotFoundException("Não encontrado");
         }
     }
@@ -108,6 +119,52 @@ public class PetService {
             return persistedPet;
         } catch (Exception ex) {
             throw new PersistenseErrorException("Ocorreu um erro ao persistir o pet.", ex);
+        }
+    }
+
+    @Transactional
+    public void adoptPet(InputMissingAdoptPet inputAdoptPet) {
+        try {
+            Pet pet = findPetById(inputAdoptPet.getPetId());
+
+            if (pet.getMissing())
+                throw new BusinessException("Você não pode adotar um animal desaparecido!");
+
+            Optional<User> user = userRepository.findById(inputAdoptPet.getUserId());
+
+            if (user.isEmpty()){
+                throw new EntityNotFoundException("O usuário não foi encontrado!");
+            }
+
+            pet.adoptPet(user.get());
+
+            petRepository.save(pet);
+
+        } catch (Exception ex) {
+            throw new BusinessException("Ocorreu um erro ao adotar o pet.", ex);
+        }
+    }
+
+    @Transactional
+    public void markMissingPetAsFound(InputMissingAdoptPet inputFindMissingPet) {
+        try {
+            Pet pet = findPetById(inputFindMissingPet.getPetId());
+
+            if (!pet.getMissing()) {
+                throw new EntityNotFoundException("Esse pet não está desaparecido!");
+            }
+            Optional<User> user = userRepository.findById(inputFindMissingPet.getUserId());
+
+            if (user.isEmpty()){
+                throw new EntityNotFoundException("O usuário não foi encontrado!");
+            }
+
+            pet.markMissingPetAsFound(user.get());
+
+            petRepository.save(pet);
+
+        } catch (Exception ex) {
+            throw new BusinessException("Ocorreu um erro ao marcar o pet como encontrado.", ex);
         }
     }
 

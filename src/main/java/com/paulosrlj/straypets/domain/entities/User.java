@@ -34,6 +34,12 @@ public class User implements UserDetails {
     @Column
     private UserRoles role;
 
+    @Column
+    private Boolean deactivated;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Pet> pets;
+
     public User(String email, String password, UserRoles role){
         this.email = email;
         this.password = password;

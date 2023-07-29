@@ -1,5 +1,6 @@
 package com.paulosrlj.straypets.api.controllers;
 
+import com.paulosrlj.straypets.api.dto.input.InputMissingAdoptPet;
 import com.paulosrlj.straypets.api.dto.input.InputPetWrapper;
 import com.paulosrlj.straypets.api.dto.output.OutputPet;
 import com.paulosrlj.straypets.config.modelMapper.PetDtoConverter;
@@ -11,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +48,23 @@ public class PetController {
         Pet pet = petDtoConverter.convertInputToModelPet(data.getData());
 
         return petDtoConverter.convertToOutput(petService.createPet(pet, data.getImages()));
+    }
+
+    @PutMapping(
+            value = "/findMissingPet")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> findMissingPet(@Valid InputMissingAdoptPet data) {
+        petService.markMissingPetAsFound(data);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/adopt")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> adoptPet(@Valid InputMissingAdoptPet data) {
+        petService.adoptPet(data);
+
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})

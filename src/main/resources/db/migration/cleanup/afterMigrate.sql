@@ -1,8 +1,10 @@
 set foreign_key_checks = 0;
 
+delete from `stray-pets`.flyway_schema_history;
 delete from `stray-pets`.photo;
-delete from `stray-pets`.location;
 delete from `stray-pets`.pet;
+delete from `stray-pets`.location;
+# delete from `stray-pets`.users;
 
 set foreign_key_checks = 1;
 

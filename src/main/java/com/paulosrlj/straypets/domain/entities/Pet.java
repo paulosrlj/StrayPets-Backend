@@ -1,6 +1,7 @@
 package com.paulosrlj.straypets.domain.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paulosrlj.straypets.enums.PetGender;
 import com.paulosrlj.straypets.enums.PetType;
 import jakarta.persistence.*;
@@ -39,6 +40,9 @@ public class Pet implements Serializable {
     private Date adoption_date;
 
     @Column(nullable = true)
+    private Date find_date;
+
+    @Column(nullable = true)
     private String comments;
 
     @Column(nullable = false)
@@ -48,6 +52,23 @@ public class Pet implements Serializable {
     @JoinColumn(name = "location_id")
     private Location location;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "id")
+    private User user;
+
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Photo> photos;
+
+    public void adoptPet(User user) {
+        this.setMissing(false);
+        this.setUser(user);
+        this.setAdoption_date(new Date());
+    }
+
+    public void markMissingPetAsFound(User user) {
+        this.setMissing(false);
+        this.setUser(user);
+        this.setFind_date(new Date());
+    }
 }

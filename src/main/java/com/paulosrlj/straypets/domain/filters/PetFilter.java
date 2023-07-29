@@ -5,11 +5,13 @@ import com.paulosrlj.straypets.enums.PetType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode
 public class PetFilter {
 
     private String name;

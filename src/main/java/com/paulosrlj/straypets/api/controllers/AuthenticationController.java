@@ -41,7 +41,7 @@ public class AuthenticationController {
 
             return new LoginResponseDTO(token);
         } catch (AuthenticationException ex) {
-            throw new com.paulosrlj.straypets.exception.AuthenticationException(ex.getMessage());
+            throw new com.paulosrlj.straypets.exception.AuthenticationException("O usuário não existe, ou credenciais incorretas");
         }
     }
 
