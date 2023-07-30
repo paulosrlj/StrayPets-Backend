@@ -37,9 +37,12 @@ public class AuthenticationController {
 
             var auth = this.authenticationManager.authenticate(usernamePassword);
 
-            var token = tokenService.generateToken((User) auth.getPrincipal());
-
-            return new LoginResponseDTO(token);
+            if (auth != null && auth.getPrincipal() != null) {
+                var token = tokenService.generateToken((User) auth.getPrincipal());
+                return new LoginResponseDTO(token);
+            } else {
+                throw new com.paulosrlj.straypets.exception.AuthenticationException("O usuário não existe ou credenciais incorretas");
+            }
         } catch (AuthenticationException ex) {
             throw new com.paulosrlj.straypets.exception.AuthenticationException("O usuário não existe, ou credenciais incorretas");
         }
