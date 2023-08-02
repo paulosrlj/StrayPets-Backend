@@ -46,6 +46,14 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public void deactivateUser() {
+        this.deactivated = true;
+    }
+
+    public void activateUser() {
+        this.deactivated = false;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRoles.ADMIN)
