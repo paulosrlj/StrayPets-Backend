@@ -2,6 +2,9 @@
 
 Backend do meu aplicativo feito em React Native para ajudar animais de rua
 
+Frontend: https://github.com/paulosrlj/StrayPets-Frontend <br>
+Backend: https://github.com/paulosrlj/StrayPets-Backend
+
 # Demo
 [Demo do Stray Pets](https://stray-pets.s3.sa-east-1.amazonaws.com/stray-pets-backend/screen-20230724-113711.mp4)
 
